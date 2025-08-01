@@ -1,10 +1,12 @@
-# proxy-client-vue
+# Unleash Vue SDK
 
-PoC for a Vue SDK for [Unleash](https://www.getunleash.io/) based on the official [proxy-client-react](https://github.com/Unleash/proxy-client-react).
+Unleash is a private, secure, and scalable [feature management platform](https://www.getunleash.io/) built to reduce the risk of releasing new features and accelerate software development. This Frontend Vue SDK is designed to help you integrate with Unleash and evaluate feature flags inside your application.
+
+You can use this client with [Unleash Enterprise](https://www.getunleash.io/pricing?utm_source=readme&utm_medium=vue) or [Unleash Open Source](https://github.com/Unleash/unleash).
 
 ## Usage note
 
-This library is meant to be used with [Unleash Edge](https://github.com/Unleash/unleash-edge/), the [Unleash front-end API](https://docs.getunleash.io/reference/front-end-api) , or the [Unleash proxy](https://github.com/Unleash/unleash-proxy).
+This library is meant to be used with [Unleash Edge](https://github.com/Unleash/unleash-edge/) or the [Unleash front-end API](https://docs.getunleash.io/reference/front-end-api).
 
 It is **not** compatible with the Unleash client API.
 
@@ -12,7 +14,7 @@ It is **not** compatible with the Unleash client API.
 
 ```bash
 npm install @unleash/proxy-client-vue
-// or
+# or
 yarn add @unleash/proxy-client-vue
 ```
 
@@ -27,8 +29,8 @@ import { plugin as unleashPlugin } from '@unleash/proxy-client-vue'
 import App from './App.vue'
 
 const config = {
-  url: 'https://HOSTNAME/proxy',
-  clientKey: 'PROXYKEY',
+  url: 'https://HOSTNAME/api/frontend',
+  clientKey: 'FRONTEND_TOKEN',
   refreshInterval: 15,
   appName: 'your-app-name',
 }
@@ -66,8 +68,8 @@ import { plugin as unleashPlugin } from '@unleash/proxy-client-vue'
 import App from './App.vue'
 
 const config = {
-  url: 'https://HOSTNAME/proxy',
-  clientKey: 'PROXYKEY',
+  url: 'https://HOSTNAME/api/frontend',
+  clientKey: 'FRONTEND_TOKEN',
   refreshInterval: 15,
   appName: 'your-app-name',
 }
@@ -86,7 +88,7 @@ import { FlagProvider, UnleashClient } from '@unleash/proxy-client-vue'
 
 const config = {
   url: 'https://UNLEASH-INSTANCE/api/frontend',
-  clientKey: 'CLIENT—SIDE—API—TOKEN',
+  clientKey: 'FRONTEND_TOKEN',
   refreshInterval: 15,
   appName: 'your-app-name',
 }
@@ -102,7 +104,7 @@ const client = new UnleashClient(config)
 
 ### Deferring client start
 
-By default, the Unleash client will start polling the Proxy for toggles immediately when the `FlagProvider` component renders. You can delay the polling by:
+By default, the Unleash client will start polling for toggles immediately when the `FlagProvider` component renders. You can delay the polling by:
 
 - setting the `startClient` prop to `false`
 - passing a client instance to the `FlagProvider`
