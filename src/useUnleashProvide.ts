@@ -1,5 +1,5 @@
 import { ref, reactive, toRefs } from 'vue'
-import { UnleashClient, IConfig, IContext } from 'unleash-proxy-client'
+import { UnleashClient, IConfig, IMutableContext } from 'unleash-proxy-client'
 
 type eventArgs = [Function, any]
 
@@ -37,7 +37,7 @@ function useUnleashProvide({
     flagsError.value = e
   })
 
-  const updateContext = async (context: IContext): Promise<void> => {
+  const updateContext = async (context: IMutableContext): Promise<void> => {
     await client.value?.updateContext(context)
   }
 
