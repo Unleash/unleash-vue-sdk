@@ -219,3 +219,7 @@ watch(userId, () => {
   run()
 })
 ```
+
+## Development
+
+Dependency install scripts are disabled (`ignore-scripts true` in `.yarnrc`) as supply-chain hardening. This also skips this repo's own `prepare` script on install, so run `yarn build` manually when you need a build. Publishing is unaffected: `npm publish` still runs `prepare`.
