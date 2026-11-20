@@ -1,5 +1,4 @@
 import { defineConfig } from 'vite'
-import dts from 'vite-plugin-dts'
 import vue from '@vitejs/plugin-vue'
 
 const path = require('path')
@@ -21,5 +20,5 @@ export default defineConfig({
       }
     }
   },
-  plugins: [vue(), dts()]
+  plugins: [vue()]
 })
