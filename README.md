@@ -12,6 +12,8 @@ It is **not** compatible with the Unleash client API.
 
 ## Installation
 
+Version 1 requires Vue 3.5.46 or later within Vue 3. Upgrade Vue before updating from the 0.x SDK.
+
 ```bash
 npm install @unleash/proxy-client-vue
 # or
