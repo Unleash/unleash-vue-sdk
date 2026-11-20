@@ -816,9 +816,9 @@ semver@~7.3.0:
     lru-cache "^6.0.0"
 
 source-map-js@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/source-map-js/-/source-map-js-1.0.2.tgz#adbc361d9c62df380125e7f161f71c826f1e490c"
-  integrity sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/source-map-js/-/source-map-js-1.2.3.tgz#4cf1e31a10db87e8234840ebc2b85a255cf7705e"
+  integrity sha512-xj+WrAkyv5Qp+t7r9N5HvCBu7g1qOe6CKRNpq22X1GGcPEQADFU54v5qsPVs3/vrUFQ7XivFrcAVKA2stI0kWA==
 
 source-map@^0.6.1, source-map@~0.6.1:
   version "0.6.1"
