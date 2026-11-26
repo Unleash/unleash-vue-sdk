@@ -23,9 +23,7 @@ jobs:
     with:
       version: ${{ github.event.inputs.version }}
       tag: ${{ github.event.inputs.tag }}
-      # v4 default setup-command is pnpm; this repo uses yarn. The build happens
-      # at publish time via `prepare` (npm runs it during npm publish).
-      setup-command: yarn install --frozen-lockfile
+      setup-command: pnpm install --frozen-lockfile && pnpm build
     secrets:
       UNLEASH_BOT_APP_ID: ${{ secrets.UNLEASH_BOT_APP_ID }}
       UNLEASH_BOT_PRIVATE_KEY: ${{ secrets.UNLEASH_BOT_PRIVATE_KEY }}
