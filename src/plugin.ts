@@ -1,17 +1,14 @@
-import { App, Plugin } from 'vue'
+import type { App, Plugin } from 'vue'
 import { ContextStateSymbol, ContextUpdateSymbol } from './context'
-import useUnleashProvide, { IProvideOptions } from './useUnleashProvide'
+import useUnleashProvide, { type IProvideOptions } from './useUnleashProvide'
 
 const plugin: Plugin = {
-  install(app: App, { config, unleashClient, startClient }: IProvideOptions) {
-    const { context, update, start } = useUnleashProvide({
-      config,
-      unleashClient,
-      startClient
-    })
+  install(app: App, options: IProvideOptions) {
+    const { context, update, start, dispose } = useUnleashProvide(options)
 
     app.provide(ContextStateSymbol, context)
     app.provide(ContextUpdateSymbol, update)
+    app.onUnmount(dispose)
 
     start()
   }

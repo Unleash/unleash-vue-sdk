@@ -106,10 +106,9 @@ const client = new UnleashClient(config)
 
 ### Deferring client start
 
-By default, the Unleash client will start polling for toggles immediately when the `FlagProvider` component renders. You can delay the polling by:
+By default, `FlagProvider` starts the client when mounted. The plugin starts it when installed.
 
-- setting the `startClient` prop to `false`
-- passing a client instance to the `FlagProvider`
+To control startup yourself, pass a client instance and set `startClient` to `false`:
 
 ```jsx
 <template>
@@ -131,7 +130,7 @@ const client = new UnleashClient({
 onMounted(() => {
   const asyncProcess = async () => {
     // do async work ...
-    client.start()
+    await client.start()
   }
   asyncProcess()
 })
@@ -142,6 +141,12 @@ onMounted(() => {
   </FlagProvider>
 </template>
 ```
+
+### Client cleanup and SSR
+
+Clients keep running when the provider or app is unmounted. Set `stopClient` to `true` to stop the client on unmount. The component and plugin both accept this option.
+
+For SSR, create a separate client for each request and use bootstrap data to render flags on the server. When using the plugin, pass your client with `startClient: false` to avoid starting it during server rendering.
 
 ## Usage
 
@@ -178,6 +183,20 @@ const variant = useVariant('travel.landing')
   <AnotherComponent v-else-if="variant.enabled && variant.name === 'AnotherComponent" />
   <DefaultComponent v-else />
 </template>
+```
+
+### Reactive flag names
+
+`useFlag` and `useVariant` also accept refs, computed values, and getters. Their values update when the flag name changes:
+
+```vue
+<script setup lang="ts">
+import { useFlag, useVariant } from '@unleash/proxy-client-vue'
+
+const props = defineProps<{ flagName: string }>()
+const enabled = useFlag(() => props.flagName)
+const variant = useVariant(() => props.flagName)
+</script>
 ```
 
 ### Defer rendering until flags fetched

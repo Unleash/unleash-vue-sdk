@@ -1,5 +1,13 @@
-import { UnleashClient } from 'unleash-proxy-client'
-import { ref, inject, onUnmounted, Ref } from 'vue'
+import type { UnleashClient } from 'unleash-proxy-client'
+import {
+  ref,
+  inject,
+  onUnmounted,
+  watch,
+  toValue,
+  type Ref,
+  type MaybeRefOrGetter
+} from 'vue'
 import { ContextStateSymbol } from './context'
 
 type TFlagContext = Partial<{
@@ -7,23 +15,24 @@ type TFlagContext = Partial<{
   client: Ref<UnleashClient>
 }>
 
-const useFlag = (name: string) => {
+const useFlag = (name: MaybeRefOrGetter<string>) => {
   const { isEnabled, client } = inject<TFlagContext>(ContextStateSymbol, {})
-  const flag = ref(Boolean(isEnabled?.value(name)))
+  const flag = ref(Boolean(isEnabled?.value(toValue(name))))
 
   function onUpdate() {
-    const enabled = isEnabled?.value(name)
+    const enabled = isEnabled?.value(toValue(name))
     if (enabled !== flag.value) {
       flag.value = !!enabled
     }
   }
 
   function onReady() {
-    flag.value = Boolean(isEnabled?.value(name))
+    flag.value = Boolean(isEnabled?.value(toValue(name)))
   }
 
   client?.value.on('ready', onReady)
   client?.value.on('update', onUpdate)
+  watch(() => toValue(name), onUpdate)
 
   onUnmounted(() => {
     client?.value.off('ready', onReady)
