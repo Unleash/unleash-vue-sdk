@@ -1,0 +1,32 @@
+name: unleash-vue-sdk CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22.x, 24.x]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - uses: pnpm/action-setup@v6
+      - name: Install
+        run: pnpm install --frozen-lockfile
+      - name: Check
+        run: pnpm run check
+      - name: Test
+        run: pnpm test
+      - name: Package compatibility
+        run: pnpm test:package

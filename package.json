@@ -28,12 +28,15 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build && vue-tsc --emitDeclarationOnly",
+    "build": "vite build && vue-tsc --emitDeclarationOnly -p tsconfig.build.json",
+    "check": "vue-tsc --noEmit",
+    "test": "vitest run",
+    "test:package": "pnpm build && node scripts/test-package.mjs",
     "prepare": "npm run build",
     "preview": "vite preview"
   },
   "dependencies": {
-    "unleash-proxy-client": "^3.8.2"
+    "unleash-proxy-client": "^3.8.3"
   },
   "packageManager": "pnpm@12.23.0",
   "peerDependencies": {
@@ -42,8 +45,10 @@
   "devDependencies": {
     "@types/node": "^22.0.0",
     "@vitejs/plugin-vue": "^5.2.4",
+    "happy-dom": "^21.0.4",
     "typescript": "^5.9.3",
     "vite": "^6.4.5",
+    "vitest": "^5.1.1",
     "vue": "^3.5.46",
     "vue-tsc": "^3.3.14"
   }
