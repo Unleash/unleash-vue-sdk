@@ -232,3 +232,10 @@ pnpm build
 ```
 
 Dependency install scripts are disabled. Publishing still runs prepare to build the package.
+
+| Command | Purpose |
+| --- | --- |
+| `pnpm run check` | Type-check the source and runtime tests. |
+| `pnpm test` | Run the component, plugin, and composable tests. |
+| `pnpm build` | Build the SDK and its TypeScript declarations. |
+| `pnpm test:package` | Build and pack the SDK, then check its types, browser build, imports, and SSR in an isolated consumer. |
