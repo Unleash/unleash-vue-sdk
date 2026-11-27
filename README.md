@@ -224,4 +224,11 @@ watch(userId, () => {
 
 ## Development
 
-Dependency install scripts are disabled (`ignore-scripts true` in `.yarnrc`) as supply-chain hardening. This also skips this repo's own `prepare` script on install, so run `yarn build` manually when you need a build. Publishing is unaffected: `npm publish` still runs `prepare`.
+Install pnpm, then install dependencies and build the SDK. The packageManager field in package.json pins the pnpm version.
+
+```bash
+pnpm install
+pnpm build
+```
+
+Dependency install scripts are disabled. Publishing still runs prepare to build the package.
