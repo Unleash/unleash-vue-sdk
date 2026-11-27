@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { onMounted, provide } from 'vue'
-import { UnleashClient, IConfig } from 'unleash-proxy-client'
+import { onMounted, onUnmounted, provide } from 'vue'
+import type { UnleashClient, IConfig } from 'unleash-proxy-client'
 
 import { ContextStateSymbol, ContextUpdateSymbol } from './context'
 import useUnleashProvide from './useUnleashProvide'
@@ -8,26 +8,27 @@ import useUnleashProvide from './useUnleashProvide'
 const {
   config,
   unleashClient,
-  startClient = true
-  // duplicated props because of https://github.com/vuejs/core/issues/4294
+  startClient = true,
+  stopClient = false
 } = defineProps<{
   config?: IConfig
   unleashClient?: UnleashClient
   startClient?: boolean
+  stopClient?: boolean
 }>()
 
-const { context, start, update } = useUnleashProvide({
+const { context, start, update, dispose } = useUnleashProvide({
   config,
   unleashClient,
-  startClient
+  startClient,
+  stopClient
 })
 
 provide(ContextStateSymbol, context)
 provide(ContextUpdateSymbol, update)
 
-onMounted(() => {
-  start()
-})
+onMounted(start)
+onUnmounted(dispose)
 </script>
 
 <template>

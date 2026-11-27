@@ -1,5 +1,13 @@
-import { IVariant, UnleashClient } from 'unleash-proxy-client'
-import { ref, inject, onUnmounted, Ref } from 'vue'
+import type { IVariant, UnleashClient } from 'unleash-proxy-client'
+import {
+  ref,
+  inject,
+  onUnmounted,
+  watch,
+  toValue,
+  type Ref,
+  type MaybeRefOrGetter
+} from 'vue'
 import { ContextStateSymbol } from './context'
 
 type TVariantContext = Partial<{
@@ -21,23 +29,24 @@ const variantHasChanged = (
   return !variantsAreEqual
 }
 
-const useVariant = (name: string) => {
+const useVariant = (name: MaybeRefOrGetter<string>) => {
   const { getVariant, client } = inject<TVariantContext>(ContextStateSymbol, {})
-  const variant = ref(getVariant?.value(name))
+  const variant = ref(getVariant?.value(toValue(name)))
 
   function onUpdate() {
-    const newVariant = getVariant?.value(name)
+    const newVariant = getVariant?.value(toValue(name))
     if (variantHasChanged(variant?.value, newVariant)) {
       variant.value = newVariant
     }
   }
 
   function onReady() {
-    variant.value = getVariant?.value(name)
+    variant.value = getVariant?.value(toValue(name))
   }
 
   client?.value.on('ready', onReady)
   client?.value.on('update', onUpdate)
+  watch(() => toValue(name), onUpdate)
 
   onUnmounted(() => {
     client?.value.off('ready', onReady)
