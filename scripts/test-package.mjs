@@ -21,10 +21,16 @@ const run = (args, cwd, env = process.env) =>
   })
 
 try {
-  const [pack] = JSON.parse(
+  const pack = JSON.parse(
     execFileSync(
-      'npm',
-      ['pack', '--ignore-scripts', '--json', '--pack-destination', temporary],
+      'pnpm',
+      [
+        'pack',
+        '--json',
+        '--skip-manifest-obfuscation',
+        '--pack-destination',
+        temporary
+      ],
       { cwd: root, encoding: 'utf8', shell: process.platform === 'win32' }
     )
   )
@@ -65,7 +71,7 @@ try {
         type: 'module',
         packageManager: manifest.packageManager,
         dependencies: {
-          [manifest.name]: `file:${join(temporary, pack.filename)}`,
+          [manifest.name]: `file:${pack.filename}`,
           vue
         },
         devDependencies,
